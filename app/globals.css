@@ -75,12 +75,37 @@
   }
   
   .black_btn {
-    @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
+    @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all text-center text-sm font-inter flex items-center justify-center;
+  }
+  
+  .black_btn:hover {
+    @apply hover:bg-white hover:text-black;
+  }
+  
+  .dark .black_btn {
+    @apply border-white bg-white text-black;
+  }
+  
+  .dark .black_btn:hover {
+    @apply hover:bg-black hover:text-white;
   }
   
   .outline_btn {
-    @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+    @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all text-center text-sm font-inter flex items-center justify-center;
   }
+  
+  .outline_btn:hover {
+    @apply hover:bg-black hover:text-white;
+  }
+  
+  .dark .outline_btn {
+    @apply border-white text-white;
+  }
+  
+  .dark .outline_btn:hover {
+    @apply hover:bg-white hover:text-black;
+  }
+  
   
   .head_text {
     @apply mt-5 text-6xl font-extrabold leading-[1.15] text-cyan-600 sm:text-6xl;

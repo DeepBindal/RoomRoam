@@ -16,10 +16,11 @@ import {
 import { useUploadThing } from "@/lib/uploadthing";
 import { createListing } from "@/lib/actions/listing.actions";
 import { Button } from "./ui/button";
-import { usePathname, useRouter, redirect } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { isBase64Image } from "@/lib/utils";
 import toast from "react-hot-toast";
-function Createlistingform({ type }) {
+
+function CreateListingForm({ type }) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -36,6 +37,7 @@ function Createlistingform({ type }) {
       category: "",
     },
   });
+
   const handleImage = (e, fieldChange) => {
     e.preventDefault();
     const fileReader = new FileReader();
@@ -84,36 +86,39 @@ function Createlistingform({ type }) {
 
     if (result === "savedListing") {
       toast.success("Listing created Successfully");
-      router.push("/")
+      router.push("/");
     }
   };
+
   return (
-    <section className="w-full max-w-full flex justify-center items-center flex-col">
-      <div className="flex flex-col justify-start items-center">
-        <h1 className="head_text">
-          <span className="blue_gradient">{type} Listing</span>
+    <section className="w-full rounded-lg shadow-xl max-w-4xl bg--200 mx-auto flex flex-col justify-center items-center mb-8 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold leading-tight text-gray-900 sm:text-4xl">
+          <span className="bg-gradient-to-r from-blue-500 to-teal-400 bg-clip-text text-transparent">
+            {type} Listing
+          </span>
         </h1>
-        <p className="desc text-left max-w-full">
+        <p className="mt-4 text-lg text-gray-600">
           {type} and share amazing stays with the world.
         </p>
       </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(postListing)}
-          className="flex flex-col sm:w-1/2 justify-start gap-10 bg-slate-500 px-10 py-16 rounded-lg mx-4"
+          className="w-full bg00 shadow-md rounded-lg p-8 space-y-6"
         >
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
-              <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-2">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   Title
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="account-form_input no-focus"
+                    className="w-full border border-zinc-950 bg-zinc-800 text-white p-2 rounded-md "
                     {...field}
                   />
                 </FormControl>
@@ -125,14 +130,14 @@ function Createlistingform({ type }) {
             control={form.control}
             name="description"
             render={({ field }) => (
-              <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-2">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   Description
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="account-form_input no-focus"
+                    className="w-full border border-zinc-950 bg-zinc-800 text-white boder-gray-300 p-2 rounded-md "
                     {...field}
                   />
                 </FormControl>
@@ -140,32 +145,30 @@ function Createlistingform({ type }) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="listing_image"
             render={({ field }) => (
-              <FormItem className="flex items-center gap-4">
-                <FormLabel className="">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   {field.value ? (
                     <Image
                       src={field.value}
-                      alt="listng image"
+                      alt="listing image"
                       width={196}
                       height={196}
                       priority
-                      className="rounded object-contain"
+                      className="rounded-md object-cover"
                     />
                   ) : (
                     "Image"
                   )}
                 </FormLabel>
-                <FormControl className="flex-1 text-base-semibold text-gray-200">
+                <FormControl className="mt-2">
                   <Input
                     type="file"
                     accept="image/*"
-                    placeholder="upload a photo"
-                    className="account-form_image-input"
+                    className="w-full p-2 border focus:ring-blue-500 focus:border-blue-500 border-zinc-950 bg-zinc-800 text-white  rounded-md"
                     onChange={(e) => handleImage(e, field.onChange)}
                   />
                 </FormControl>
@@ -177,14 +180,14 @@ function Createlistingform({ type }) {
             control={form.control}
             name="price"
             render={({ field }) => (
-              <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-3">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   Price
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="account-form_input no-focus"
+                    className="w-full border border-zinc-950 bg-zinc-800 text-white  p-2 rounded-md focus:ring-blue-500 focus:border-blue-500"
                     {...field}
                   />
                 </FormControl>
@@ -192,19 +195,18 @@ function Createlistingform({ type }) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="location"
             render={({ field }) => (
-              <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-2">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   Location
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="account-form_input no-focus"
+                    className="w-full border border-zinc-950 bg-zinc-800 text-white  p-2 rounded-md focus:ring-blue-500 focus:border-blue-500"
                     {...field}
                   />
                 </FormControl>
@@ -216,14 +218,14 @@ function Createlistingform({ type }) {
             control={form.control}
             name="country"
             render={({ field }) => (
-              <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-2">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   Country
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="account-form_input no-focus"
+                    className="w-full border border-zinc-950 bg-zinc-800 text-white p-2 rounded-md focus:ring-blue-500 focus:border-blue-500"
                     {...field}
                   />
                 </FormControl>
@@ -231,19 +233,18 @@ function Createlistingform({ type }) {
               </FormItem>
             )}
           />
-
           <FormField
             control={form.control}
             name="category"
             render={({ field }) => (
-              <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-2">
+              <FormItem>
+                <FormLabel className="text-lg font-medium text-gray-700">
                   Category
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="account-form_input no-focus"
+                    className="w-full border border-zinc-950 bg-zinc-800 text-white p-2 rounded-md focus:ring-blue-500 focus:border-blue-500"
                     {...field}
                   />
                 </FormControl>
@@ -251,11 +252,13 @@ function Createlistingform({ type }) {
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit" className="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+            Submit
+          </Button>
         </form>
       </Form>
     </section>
   );
 }
 
-export default Createlistingform;
+export default CreateListingForm;

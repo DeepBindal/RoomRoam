@@ -50,20 +50,20 @@ export default function ReviewForm({ listingId }) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(submitReview)}
-          className="flex flex-col justify-start gap-10 bg-white px-10 py-16 rounded-lg mx-4"
+          className="flex flex-col justify-start gap-10 bg-zinc-900 px-10 py-16 rounded-lg mx-4"
         >
           <FormField
             control={form.control}
             name="review"
             render={({ field }) => (
               <FormItem className="flex flex-col w-full gap-4">
-                <FormLabel className="text-base-semibold text-dark-2">
+                <FormLabel className="text-base-semibold text-slate-100">
                   Review
                 </FormLabel>
                 <FormControl>
                   <Input
                     type="text"
-                    className="border border-dark-4"
+                    className="border border-zinc-950 bg-zinc-800 text-white "
                     {...field}
                   />
                 </FormControl>
@@ -75,9 +75,10 @@ export default function ReviewForm({ listingId }) {
           <FormField
             control={form.control}
             name="rating"
+            
             render={({ field: { value, onChange } }) => (
               <FormItem>
-                <FormLabel>Rating - {value}</FormLabel>
+                <FormLabel className="text-slate-100">Rating - {value}</FormLabel>
                 <FormControl>
                   <Slider
                     min={0}

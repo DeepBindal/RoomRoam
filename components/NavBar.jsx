@@ -26,7 +26,7 @@ function NavBar() {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-listing" className="black_btn">
+            <Link href="/create-listing" className="dark black_btn hover:text-black">
               Post Listing
               <Image
                 src="/assets/create.svg"
@@ -38,7 +38,7 @@ function NavBar() {
             </Link>
             <button
               type="button"
-              className="outline_btn"
+              className=" dark black_btn"
               onClick={() => signOut()}
             >
               Sign Out
@@ -60,14 +60,14 @@ function NavBar() {
           <div className="flex gap-3">
             <button
               type="button"
-              className="black_btn"
+              className="black_btn dark"
               onClick={() => {
                 signIn();
               }}
             >
               Sign In
             </button>
-            <Link href="/signup" className="black_btn">
+            <Link href="/signup" className=" dark black_btn">
               Sign Up
             </Link>
           </div>

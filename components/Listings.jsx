@@ -87,7 +87,7 @@ const Listings = ({listings}) => {
         <form className="relative w-[80%] flex-center">
           <Input
             type="text"
-            color="primary"
+            color="secondary"
             placeholder="Search for a stay you like!"
             value={searchText}
             onChange={handleSearchChange}

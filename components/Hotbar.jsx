@@ -4,7 +4,7 @@ const Hotbar = ({ category, handleHotbarclick }) => {
   return (
     <>
       <div className="flex-between gap-5 w-full flex-wrap">
-        <ul className="custom-scrollbar flex gap-2 overflow-auto">
+        <ul className="custom-scrollbar flex text-sky-400/100 gap-2 overflow-auto">
           {category.map((item) => (
             <button
               key={item}

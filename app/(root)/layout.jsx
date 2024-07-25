@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <div className="min-h-screen bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]">
+          <div className="min-h-screen bg-neutral-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]">
           <NavBar />
           {children}
           <Footer/>
@@ -29,3 +29,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+{/* <div class="absolute top-0 z-[-2] h-screen w-screen "></div> */}

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const FormSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -15,6 +15,7 @@ const FormSchema = z.object({
 });
 
 const Signinform = ({ callbackUrl }) => {
+  console.log(callbackUrl)
   const router = useRouter();
   const {
     register,
@@ -28,16 +29,11 @@ const Signinform = ({ callbackUrl }) => {
   });
 
   const loginUser = async (data) => {
-    let result;
-    if (data === "github") {
-      result = signIn("github");
-    } else {
-      result = await signIn("credentials", {
-        redirect: false,
-        email: data.email,
-        password: data.password,
-      });
-    }
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password,
+    });
     if (!result?.ok) {
       toast.error(result.error);
       return;
@@ -46,6 +42,11 @@ const Signinform = ({ callbackUrl }) => {
     router.push(callbackUrl ? callbackUrl : "/");
   };
 
+  const loginGithub = async () => {
+    signIn("github");
+    toast.success("Welcome");
+    router.push(callbackUrl ? callbackUrl : "/"); 
+  };
   return (
     <>
       <div className="flex flex-col flex-center">
@@ -85,7 +86,7 @@ const Signinform = ({ callbackUrl }) => {
             </button>
           </form>
           <button
-            onClick={() => loginUser("github")}
+            onClick={loginGithub}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md mt-4 md:mt-4 transition duration-300 ease-in-out"
           >
             Sign In with Github
@@ -93,7 +94,7 @@ const Signinform = ({ callbackUrl }) => {
           <p className="mt-4 md:mt-8 text-start text-sm text-gray-600">
             <Link
               className="font-semibold text-blue-500 hover:text-blue-600"
-              href="/auth/forgotPassword"
+              href="/forgotPassword"
             >
               Forgot password ?
             </Link>
@@ -101,7 +102,7 @@ const Signinform = ({ callbackUrl }) => {
           <p className="mt-4 md:mt-8 text-center text-sm text-gray-600">
             No Account?&nbsp;
             <Link
-              href="/auth/signup"
+              href="/signup"
               className="font-semibold text-blue-500 hover:text-blue-600"
             >
               Sign Up
