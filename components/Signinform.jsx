@@ -43,7 +43,7 @@ const Signinform = ({ callbackUrl }) => {
   };
 
   const loginGithub = async () => {
-    signIn("github");
+    await signIn("github");
     toast.success("Welcome");
     router.push(callbackUrl ? callbackUrl : "/"); 
   };
