@@ -8,8 +8,9 @@ import { formatDateString } from "@/lib/utils";
 // import { getServerSession } from "next-auth";
 // import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 async function page({ params }) {
-  let listing = await fetchListingByID(params.id);
-  console.log(listing.reviews);
+  let result = await fetchListingByID(params.id);
+  const listing = result.listing
+
   return (
     <div className="mb-20 container lg:mx-auto lg:w-4/6 h-full md:w-5/6 sm:w-full">
       <div className="flex flex-col">

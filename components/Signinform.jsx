@@ -15,7 +15,6 @@ const FormSchema = z.object({
 });
 
 const Signinform = ({ callbackUrl }) => {
-  console.log(callbackUrl)
   const router = useRouter();
   const {
     register,
@@ -43,9 +42,10 @@ const Signinform = ({ callbackUrl }) => {
   };
 
   const loginGithub = async () => {
-    await signIn("github");
+    await signIn("github", { callbackUrl: callbackUrl || "/" });
+    // console.log(result)
     toast.success("Welcome");
-    router.push(callbackUrl ? callbackUrl : "/"); 
+    // redirect("/")
   };
   return (
     <>
@@ -86,7 +86,7 @@ const Signinform = ({ callbackUrl }) => {
             </button>
           </form>
           <button
-            onClick={loginGithub}
+            onClick={() => loginGithub()}
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md mt-4 md:mt-4 transition duration-300 ease-in-out"
           >
             Sign In with Github

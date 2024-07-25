@@ -8,20 +8,15 @@ import Hotbar from "./Hotbar";
 const ListingCardList = ({ data, taxes }) => {
   return (
     <>
-      {data.length > 0
-        && data.map((listing) => (
-            <ListingCard
-              key={listing._id}
-              listing={listing}
-              taxes={taxes}
-            />
-          ))}
+      {data.length > 0 &&
+        data.map((listing) => (
+          <ListingCard key={listing._id} listing={listing} taxes={taxes} />
+        ))}
     </>
   );
 };
 
-const Listings = ({listings}) => {
-
+const Listings = ({ listings }) => {
   const category = [
     "Pool",
     "Beach",
@@ -38,7 +33,7 @@ const Listings = ({listings}) => {
     "Iconic Cities",
     "Mansions",
     "Skiing",
-    "castles"
+    "castles",
   ];
 
   // Search states
@@ -47,7 +42,6 @@ const Listings = ({listings}) => {
   const [searchedResults, setSearchedResults] = useState([]);
 
   const [taxes, setTaxes] = useState(false);
-
 
   const filterListings = (searchtext) => {
     const regex = new RegExp(searchtext, "i");
@@ -84,42 +78,50 @@ const Listings = ({listings}) => {
     <>
       {/* <div className="feed"> */}
       <h1 className="head_text my-4">Discover & Share</h1>
-        <form className="relative w-[80%] flex-center">
-          <Input
-            type="text"
-            color="secondary"
-            placeholder="Search for a stay you like!"
-            value={searchText}
-            onChange={handleSearchChange}
-            required
-            // className="search_input peer w-full"
-          />
-        </form>
+      <form className="relative w-[80%] flex-center">
+        <Input
+          type="text"
+          color="secondary"
+          placeholder="Search for a stay you like!"
+          value={searchText}
+          onChange={handleSearchChange}
+          required
+          // className="search_input peer w-full"
+        />
+      </form>
       {/* </div> */}
       {/* <button onClick={setTaxes(!taxes)}>Click me</button> */}
       <div className="w-[80%]">
-      <Hotbar
-        category={category}
-        taxes={taxes}
-        setTaxes={setTaxes}
-        handleHotbarclick={handleHotbarclick}
-      />
+        <Hotbar
+          category={category}
+          taxes={taxes}
+          setTaxes={setTaxes}
+          handleHotbarclick={handleHotbarclick}
+        />
       </div>
       {/* All Prompts */}
-      <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
+      <div className="w-[80%]">
         {searchText ? (
-          searchedResults.length > 0 ? (<ListingCardList
-            data={searchedResults}
-            taxes={taxes}
-            // handleClick={handleClick}
-          />) : (<p>Search for something else</p>)
-          
+          searchedResults.length > 0 ? (
+            // <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
+            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
+              <ListingCardList
+                data={searchedResults}
+                taxes={taxes}
+                // handleClick={handleClick}
+              />
+            </div>
+          ) : (
+            <p className="text-slate-100">Search for something else</p>
+          )
         ) : (
-          <ListingCardList
-            data={listings}
-            taxes={taxes}
-            // handleClick={handleClick}
-          />
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
+            <ListingCardList
+              data={listings}
+              taxes={taxes}
+              // handleClick={handleClick}
+            />
+          </div>
         )}
       </div>
     </>

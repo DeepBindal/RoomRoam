@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 
 function ListingCard({ listing }) {
   return (
-    <Link href={`/listing/${listing._id}`}>
+    <Link href={`/listing/${listing._id}`} className="w-full">
       <div
         className="relative block w-full mb-4 rounded-lg shadow-lg text-slate-200 hover:text-sky-400 overflow-hidden transition-shadow duration-300"
         style={{ height: "400px" }} // Set a fixed height for the card
@@ -22,11 +22,14 @@ function ListingCard({ listing }) {
           }}
         ></div>
         <div
-          className="relative p-6 flex flex-col justify-between h-full"
+          className="relative p-6 flex w-full flex-col justify-between h-full"
           style={{ zIndex: 2 }}
         >
-          <div>
-            <h2 className="text-xl font-extrabold mb-4">{listing.title}</h2>
+          <div className="w-full bg-inherit hover:shadow-lg">
+            <h2 className="text-xl w-full font-extrabold mb-4">{listing.title}</h2>
+            <p>
+              {listing.location}, {listing.country}
+            </p>
             <p>
               &#8377;
               {true ? listing.price + listing.price * 0.18 : listing.price}/
@@ -41,14 +44,3 @@ function ListingCard({ listing }) {
 }
 
 export default ListingCard;
-
-// <div className="card h-80 w-72 shadow-lg bg-slate-100 rounded-3xl">
-//         <img
-
-//           className="h-3/4 rounded-t-3xl w-full hover:opacity-80"
-//         />
-//         <div className="p-4">
-//           <h5>{listing.title}</h5>
-
-//         </div>
-//       </div>

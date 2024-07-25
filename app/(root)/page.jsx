@@ -7,7 +7,7 @@ export default async function Home() {
   const result = await fetchListings();
   return (
     <main className="flex-col flex-center max-w-full px-10">
-      <Listings listings={result}/>
+      <Listings listings={result.allListings}/>
     </main>
   );
 }
