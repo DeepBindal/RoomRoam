@@ -32,6 +32,11 @@ function Editlistingform({
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
+  useEffect(() => {
+    if(session === undefined || session === null){
+      router.push("/signin")
+    }
+  }, [])
   const [files, setFiles] = useState([]);
   const { startUpload } = useUploadThing("media");
   const form = useForm({

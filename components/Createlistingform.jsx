@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
@@ -24,6 +24,12 @@ function CreateListingForm({ type }) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
+  useEffect(() => {
+    if(session === undefined || session === null){
+      router.push("/signin")
+    }
+  }, [])
+  console.log(session)
   const [files, setFiles] = useState([]);
   const { startUpload } = useUploadThing("media");
   const form = useForm({

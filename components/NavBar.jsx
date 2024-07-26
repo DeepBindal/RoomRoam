@@ -26,7 +26,10 @@ function NavBar() {
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-listing" className="dark black_btn hover:text-black">
+            <Link
+              href="/create-listing"
+              className="dark black_btn hover:text-black"
+            >
               Post Listing
               <Image
                 src="/assets/create.svg"
@@ -43,31 +46,29 @@ function NavBar() {
             >
               Sign Out
             </button>
-            <Link href="/profile">
-              <Image
-                src={session?.user.image || `/assets/user.svg`}
-                className="rounded-full"
-                width={37}
-                alt="profile-pic"
-                height={37}
-                onClick={() => {
-                  setToggleDrop((prev) => !prev);
-                }}
-              />
-            </Link>
+            <Image
+              src={session?.user.image || `/assets/user.svg`}
+              className="rounded-full"
+              width={37}
+              alt="profile-pic"
+              height={37}
+              onClick={() => {
+                setToggleDrop((prev) => !prev);
+              }}
+            />
           </div>
         ) : (
           <div className="flex gap-3">
             <button
               type="button"
-              className="black_btn dark"
+              className="black_btn"
               onClick={() => {
                 signIn();
               }}
             >
               Sign In
             </button>
-            <Link href="/signup" className=" dark black_btn">
+            <Link href="/signup" className="black_btn">
               Sign Up
             </Link>
           </div>
@@ -90,13 +91,6 @@ function NavBar() {
             />
             {toggleDrop && (
               <div className="dropdown">
-                <Link
-                  href="/profile"
-                  className="dropdown_link"
-                  onClick={() => setToggleDrop(false)}
-                >
-                  My Profile
-                </Link>
                 <Link
                   href="/create-listing"
                   className="dropdown_link"
