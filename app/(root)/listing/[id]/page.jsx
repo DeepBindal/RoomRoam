@@ -25,14 +25,14 @@ async function page({ params }) {
             className="object-cover"
           />
         </div>
-        <p className="text-gray-800 mt-1 text-sm">
+        <p className="text-gray-300 mt-1 text-sm">
           Owned By : {listing?.owner?.username}
         </p>
         <p className="desc">{listing?.description}</p>
-        <p className="text-gray-600 mt-2 text-xl">
+        <p className="text-slate-100 mt-2 text-xl">
           {listing?.location}, <span>{listing?.country}</span>
         </p>
-        <p className=" font-bold text-lg text-start mt-2">
+        <p className=" font-bold text-lg text-slate-100 text-start mt-2">
           &#8377;{listing?.price}/ Night
         </p>
 

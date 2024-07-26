@@ -22,7 +22,7 @@ function ReviewCard({
   const pathname = usePathname();
 
   return (
-    <Card className="max-w-[400px]">
+    <Card className="max-w-[400px] bg-zinc-800 text-slate-100"> 
       <CardHeader className="flex justify-between gap-3">
         <div className="flex flex-center">
           <Image
@@ -34,7 +34,7 @@ function ReviewCard({
           />
           <div className="flex flex-col">
             <p className="text-md">{username}</p>
-            <p className="text-small text-default-500">{date}</p>
+            <p className="text-small">{date}</p>
           </div>
         </div>
         <div className="flex text-lg">
