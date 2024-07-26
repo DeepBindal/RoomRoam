@@ -1,11 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Checkbox, Input, Link } from "@nextui-org/react";
 import { z } from "zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerUser } from "@/lib/actions/user.actions";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 const FormSchema = z.object({
   username: z
@@ -22,6 +24,7 @@ const FormSchema = z.object({
 
 const Signup = () => {
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -32,6 +35,12 @@ const Signup = () => {
   } = useForm({
     resolver: zodResolver(FormSchema),
   });
+  const { data: session } = useSession();
+  useEffect(() => {
+    if (session !== undefined || session !== null) {
+      router.push("/");
+    }
+  }, []);
 
   const saveUser = async (data) => {
     setSubmitting(true);
@@ -41,9 +50,10 @@ const Signup = () => {
       const result = await registerUser(user);
       setSubmitting(false);
       console.log(result);
-      if(result === "UserRegistered"){
-        reset({})
-        reset({})
+      if (result === "UserRegistered") {
+        router.push("/")
+        reset({});
+        reset({});
         toast.success("User registered successfully. Activate your account!");
       }
     } catch (error) {
@@ -54,52 +64,55 @@ const Signup = () => {
 
   return (
     <>
-    <div className="flex flex-center">
-      <div className="p-4 mx-4 md:p-8 flex flex-col items-center my-8 md:h-auto md:w-2/3 lg:w-1/2 xl:w-1/3 rounded-xl shadow-md bg-gray-200 ">
-        <div className="w-full my-4 mx-4s px-4">
-          <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800">
-            Create your account
-          </h1>
-          <p className="text-gray-600 text-center">
-            to continue to Stock Management
-          </p>
+      <div className="flex flex-center">
+        <div className="p-4 mx-4 md:p-8 flex flex-col items-center my-8 md:h-auto md:w-2/3 lg:w-1/2 xl:w-1/3 rounded-xl shadow-md bg-gray-200 ">
+          <div className="w-full my-4 mx-4s px-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-center text-gray-800">
+              Create your account
+            </h1>
+            <p className="text-gray-600 text-center">
+              to continue to Stock Management
+            </p>
+          </div>
+          <form
+            onSubmit={handleSubmit(saveUser)}
+            className="flex flex-col mt-4 md:mt-8 w-full space-y-4"
+          >
+            <Input
+              type="text"
+              {...register("username")}
+              label="Username"
+              errorMessage={errors.username?.message}
+              isInvalid={!!errors.username}
+              id="username"
+            />
+
+            <Input
+              type="email"
+              label="Email"
+              {...register("email")}
+              errorMessage={errors.email?.message}
+              isInvalid={!!errors.email}
+              id="email"
+            />
+
+            <Input
+              type="password"
+              id="password"
+              label="Password"
+              color="default"
+              {...register("password")}
+              errorMessage={errors.password?.message}
+              isInvalid={!!errors.password}
+            />
+            <button
+              disabled={submitting}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md mt-4 md:mt-8 transition duration-300 ease-in-out"
+            >
+              {submitting ? `Signing Up` : "Sign Up"}
+            </button>
+          </form>
         </div>
-        <form
-          onSubmit={handleSubmit(saveUser)}
-          className="flex flex-col mt-4 md:mt-8 w-full space-y-4"
-        >
-          <Input
-            type="text"
-            {...register("username")}
-            label="Username"
-            errorMessage={errors.username?.message}
-            isInvalid={!!errors.username}
-            id="username"
-          />
-
-          <Input
-            type="email"
-            label="Email"
-            {...register("email")}
-            errorMessage={errors.email?.message}
-            isInvalid={!!errors.email}
-            id="email"
-          />
-
-          <Input
-            type="password"
-            id="password"
-            label="Password"
-            color="default"
-            {...register("password")}
-            errorMessage={errors.password?.message}
-            isInvalid={!!errors.password}
-          />
-          <button disabled={submitting} className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-md mt-4 md:mt-8 transition duration-300 ease-in-out">
-            {submitting ? `Signing Up` : ("Sign Up")}
-          </button>
-        </form>
-      </div>
       </div>
     </>
   );

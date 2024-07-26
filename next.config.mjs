@@ -12,6 +12,11 @@ const nextConfig = {
     config.externals = [...config.externals, "bcrypt"];
     return config;
   },
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '5mb',
+    },
+  },
 };
 
 export default nextConfig;

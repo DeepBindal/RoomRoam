@@ -1,12 +1,12 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Input } from "@nextui-org/react";
 import { z } from "zod";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 
 const FormSchema = z.object({
@@ -26,6 +26,12 @@ const Signinform = ({ callbackUrl }) => {
   } = useForm({
     resolver: zodResolver(FormSchema),
   });
+  const { data: session } = useSession();
+  useEffect(() => {
+    if(session !== undefined || session !== null){
+      router.push("/")
+    }
+  }, [])
 
   const loginUser = async (data) => {
     const result = await signIn("credentials", {

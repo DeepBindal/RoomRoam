@@ -19,17 +19,18 @@ import { Button } from "./ui/button";
 import { usePathname, useRouter } from "next/navigation";
 import { isBase64Image } from "@/lib/utils";
 import toast from "react-hot-toast";
+import { Spinner } from "@nextui-org/react";
 
 function CreateListingForm({ type }) {
   const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { data: session } = useSession();
   useEffect(() => {
-    if(session === undefined || session === null){
-      router.push("/signin")
+    if (session === undefined || session === null) {
+      router.push("/signin");
     }
-  }, [])
-  console.log(session)
+  }, []);
   const [files, setFiles] = useState([]);
   const { startUpload } = useUploadThing("media");
   const form = useForm({
@@ -66,33 +67,39 @@ function CreateListingForm({ type }) {
   };
 
   const postListing = async (values) => {
-    const blob = values.listing_image;
+    try {
+      const blob = values.listing_image;
+      setLoading(true);
 
-    const hasImageChanged = isBase64Image(blob);
+      const hasImageChanged = isBase64Image(blob);
 
-    if (hasImageChanged) {
-      const imgRes = await startUpload(files);
+      if (hasImageChanged) {
+        const imgRes = await startUpload(files);
 
-      if (imgRes && imgRes[0].fileUrl) {
-        values.listing_image = imgRes[0].fileUrl;
+        if (imgRes && imgRes[0].fileUrl) {
+          values.listing_image = imgRes[0].fileUrl;
+        }
       }
-    }
-    console.log(values);
-    const result = await createListing({
-      title: values.title,
-      description: values.description,
-      image: values.listing_image,
-      price: values.price,
-      location: values.location,
-      country: values.country,
-      category: values.category,
-      userId: session.user.id,
-      path: pathname,
-    });
+      console.log(values);
+      const result = await createListing({
+        title: values.title,
+        description: values.description,
+        image: values.listing_image,
+        price: values.price,
+        location: values.location,
+        country: values.country,
+        category: values.category,
+        userId: session.user.id,
+        path: pathname,
+      });
 
-    if (result === "savedListing") {
-      toast.success("Listing created Successfully");
-      router.push("/");
+      setLoading(false);
+      if (result === "savedListing") {
+        toast.success("Listing created Successfully");
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -258,8 +265,12 @@ function CreateListingForm({ type }) {
               </FormItem>
             )}
           />
-          <Button type="submit" className="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            Submit
+          <Button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            {loading ? <Spinner /> : "Submit"}
           </Button>
         </form>
       </Form>
