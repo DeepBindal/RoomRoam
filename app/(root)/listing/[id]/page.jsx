@@ -36,22 +36,22 @@ async function page({ params }) {
           &#8377;{listing?.price}/ Night
         </p>
 
-        <ShowListing id={listing?._id} ownerId={listing?.owner?.id} />
+        <ShowListing id={listing?._id.toString()} ownerId={listing?.owner?.id.toString()} />
 
         <p className="head_text my-8">Reviews</p>
         <div className="grid sm:grid-cols-2 grid-cols-1 gap-5">
           {listing.reviews.length > 0 ? (
             listing.reviews.map((review) => (
                 <ReviewCard
-                  key={review._id}
-                  reviewId={review._id}
+                  key={review._id.toString()}
+                  reviewId={review._id.toString()}
                   comment={review.comment}
                   rating={review.rating}
                   username={review.author.username}
                   image={review.author.image || null}
                   date={formatDateString(review.createAt)}
-                  listingId={listing._id}
-                  authorId={review.author?.id}
+                  listingId={listing._id.toString()}
+                  authorId={review.author?.id.toString()}
                 />
             ))
           ) : (

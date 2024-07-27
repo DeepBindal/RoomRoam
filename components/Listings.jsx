@@ -76,7 +76,6 @@ const Listings = ({ listings }) => {
 
   return (
     <>
-      {/* <div className="feed"> */}
       <h1 className="head_text my-4">Discover & Share</h1>
       <form className="relative w-[80%] flex-center">
         <Input
@@ -86,11 +85,8 @@ const Listings = ({ listings }) => {
           value={searchText}
           onChange={handleSearchChange}
           required
-          // className="search_input peer w-full"
         />
       </form>
-      {/* </div> */}
-      {/* <button onClick={setTaxes(!taxes)}>Click me</button> */}
       <div className="w-[80%]">
         <Hotbar
           category={category}
@@ -99,28 +95,18 @@ const Listings = ({ listings }) => {
           handleHotbarclick={handleHotbarclick}
         />
       </div>
-      {/* All Prompts */}
       <div className="w-[80%]">
         {searchText ? (
           searchedResults.length > 0 ? (
-            // <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
             <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
-              <ListingCardList
-                data={searchedResults}
-                taxes={taxes}
-                // handleClick={handleClick}
-              />
+              <ListingCardList data={searchedResults} taxes={taxes} />
             </div>
           ) : (
             <p className="text-slate-100">Search for something else</p>
           )
         ) : (
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
-            <ListingCardList
-              data={listings}
-              taxes={taxes}
-              // handleClick={handleClick}
-            />
+            <ListingCardList data={listings} taxes={taxes} />
           </div>
         )}
       </div>
