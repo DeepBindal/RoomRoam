@@ -16,14 +16,18 @@ const transformListings = (listings) => {
   }));
 };
 
-export default async function Home() {
+const fetchData = async () => {
   const result = await fetchListings();
   const plainListings = transformListings(result);
+  return plainListings
+};
 
+export default async function Home() {
+
+  const plainListings = await fetchData()
   return (
     <main className="flex-col flex-center max-w-full px-10">
       <Listings listings={plainListings} />
     </main>
   );
 }
-
