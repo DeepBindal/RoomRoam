@@ -1,4 +1,4 @@
-import Listings from "@/components/Listings";
+import dynamic from 'next/dynamic';
 import { fetchListings } from "@/lib/actions/listing.actions";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,6 +21,10 @@ const fetchData = async () => {
   const plainListings = transformListings(result);
   return plainListings
 };
+
+const Listings = dynamic(() => import('@/components/Listings'), {
+  ssr: false,
+});
 
 export default async function Home() {
 

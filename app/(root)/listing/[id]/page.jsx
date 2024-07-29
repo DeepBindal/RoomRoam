@@ -11,6 +11,10 @@ async function page({ params }) {
   let result = await fetchListingByID(params.id);
   const listing = result.listing
 
+  if(!listing){
+    return <p className="head_text blue_gradient my-5">Listing does not exist !</p>
+  }
+
   return (
     <div className="mb-20 container lg:mx-auto lg:w-4/6 h-full md:w-5/6 sm:w-full">
       <div className="flex flex-col">
