@@ -1,7 +1,7 @@
 import { connectToDB } from "@/lib/db";
 import Listing from "@/lib/models/Listing";
 
-export const GET = async (req, res) => {
+export const POST = async (req, res) => {
     try {
         await connectToDB();
         const allListings = await Listing.find({});

@@ -22,7 +22,7 @@ const Listings = () => {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      const result = await fetch("/api/listing", { cache: "no-store" });
+      const result = await fetch("/api/listing", { cache: "no-store", method: "POST" });
       const response = await result.json();
       setListings(response);
       setLoading(false);

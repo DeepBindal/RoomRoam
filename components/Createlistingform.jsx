@@ -96,7 +96,7 @@ function CreateListingForm({ type }) {
       setLoading(false);
       if (result === "savedListing") {
         toast.success("Listing created Successfully");
-        router.push("/");
+        router.push("/home");
       }
     } catch (error) {
       console.log(error);

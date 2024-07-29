@@ -16,7 +16,7 @@ function ShowListing({ id, ownerId, reviews }) {
     let result = await deleteListing(id, pathname);
     if (result === "Deleted successfully") {
       toast.success("Listing deleted!");
-      router.push("/");
+      router.push("/home");
     }
   };
   return (
