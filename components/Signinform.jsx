@@ -28,7 +28,7 @@ const Signinform = ({ callbackUrl }) => {
   });
   const { data: session } = useSession();
   useEffect(() => {
-    if(session !== undefined || session !== null){
+    if(session){
       router.push("/")
     }
   }, [])
