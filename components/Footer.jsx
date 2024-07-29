@@ -17,7 +17,7 @@ function Footer() {
           <p className="logo_text blue_gradient">RoomRoam</p>
         </Link>
         <p className="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-          © 2020 Wanderlust —
+          © 2020 RoomRoam —
           <a
             href="/"
             className="text-gray-600 ml-1"

@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ListingCard from "./ListingCard";
-import { Input } from "@nextui-org/react";
+import { Input, Spinner } from "@nextui-org/react";
 import Hotbar from "./Hotbar";
 
 const ListingCardList = ({ data, taxes }) => {
   return (
     <>
-      {data.length > 0 &&
+      {data?.length > 0 &&
         data.map((listing) => (
           <ListingCard key={listing._id} listing={listing} taxes={taxes} />
         ))}
@@ -16,7 +16,19 @@ const ListingCardList = ({ data, taxes }) => {
   );
 };
 
-const Listings = ({ listings }) => {
+const Listings = () => {
+  const [listings, setListings] = useState();
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const result = await fetch("/api/listing", { cache: "no-store" });
+      const response = await result.json();
+      setListings(response);
+      setLoading(false);
+    };
+    getData();
+  }, []);
   const category = [
     "Pool",
     "Beach",
@@ -95,21 +107,25 @@ const Listings = ({ listings }) => {
           handleHotbarclick={handleHotbarclick}
         />
       </div>
-      <div className="w-[80%]">
-        {searchText ? (
-          searchedResults.length > 0 ? (
-            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
-              <ListingCardList data={searchedResults} taxes={taxes} />
-            </div>
+      {loading ? (
+        <div className="my-6"><Spinner /></div>
+      ) : (
+        <div className="w-[80%]">
+          {searchText ? (
+            searchedResults.length > 0 ? (
+              <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
+                <ListingCardList data={searchedResults} taxes={taxes} />
+              </div>
+            ) : (
+              <p className="text-slate-100">Search for something else</p>
+            )
           ) : (
-            <p className="text-slate-100">Search for something else</p>
-          )
-        ) : (
-          <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
-            <ListingCardList data={listings} taxes={taxes} />
-          </div>
-        )}
-      </div>
+            <div className="grid lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-16 mt-10">
+              <ListingCardList data={listings} taxes={taxes} />
+            </div>
+          )}
+        </div>
+      )}
     </>
   );
 };
